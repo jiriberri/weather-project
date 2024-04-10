@@ -13,14 +13,14 @@
 
       <div class="weather-location" v-if="typeof weather.main != 'undefined'">
         <div class="location-section">
-          <div class="location">{{weather.name}}, {{ weather.sys.country }}</div>
-          <div class="date">{{ weather.date }}</div>
+          <div class="location">{{ weather.name }}, {{ weather.sys.country }}</div>
+          <div class="date">{{ dateBuilder() }}</div>
         </div>
       </div>
 
-      <div class="weather-section">
-        <div class="temp">14°c</div>
-        <div class="weather">Sunny</div>
+      <div class="weather-section" v-if=" typeof weather.main != 'undefined'">
+        <div class="temperature">{{ Math.round(weather.main.temp) }}°C</div>
+        <div class="weather">{{ weather.weather[0].main }}</div>
 
       </div>
     </main>
@@ -50,6 +50,21 @@ export default {
 
     setResults(data) {
       this.weather = data;
+      console.log(this.weather);
+    },
+
+    dateBuilder () {
+      let d = new Date();
+      let months = ["January", "February", "March", "April", "May",
+      "June", "July", "August", "September", "October", "November", "December"];
+      let days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+
+      let day = days[d.getDay()];
+      let date = d.getDate();
+      let month = months[d.getMonth()];
+      let year = d.getFullYear();
+
+      return `${day} ${date} ${month} ${year}`;
     }
   }
 }
@@ -130,7 +145,7 @@ export default {
     text-align: center;
   }
 
-  .weather-section .temp {
+  .weather-section .temperature {
     display: inline-block;
     padding: 10px 25px;
     color: #fff;
