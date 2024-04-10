@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" :class="typeof weather.main != 'undefined' && weather.main.temp > 17 ? 'warm' : ''">
     <main>
       <div class="search-section">
         <input 
@@ -86,6 +86,10 @@ export default {
     background-image: url(./assets/cold.jpg);
     background-size: cover;
     background-position: bottom;
+  }
+
+  #app.warm {
+    background-image: url(./assets/warm.jpg);
   }
 
   main {
